@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web3 撸毛学院 · 脚本/项目/VIP群 · 零撸专区</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Font: Space Grotesk -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #0b0d17;
+            color: #e2e8f0;
+            line-height: 1.6;
+            background-image: radial-gradient(circle at 30% 10%, rgba(66, 153, 225, 0.08) 0%, transparent 30%),
+                              radial-gradient(circle at 80% 70%, rgba(129, 140, 248, 0.08) 0%, transparent 35%);
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .glass-card {
+            background: rgba(18, 22, 38, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(72, 130, 244, 0.25);
+            border-radius: 32px;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(72, 130, 244, 0.1) inset;
+            transition: transform 0.2s ease, border-color 0.2s;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(72, 130, 244, 0.5);
+            box-shadow: 0 25px 45px -15px rgba(0, 180, 255, 0.3);
+        }
+
+        .neon-text {
+            text-shadow: 0 0 8px rgba(72, 130, 244, 0.8), 0 0 16px rgba(56, 189, 248, 0.5);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #b3d9ff, #90cdf4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            border-left: 4px solid #3b82f6;
+            padding-left: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* 价格网格 */
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.8rem;
+            margin: 2rem 0 3rem;
+        }
+
+        .account-card {
+            background: rgba(12, 18, 34, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid #2d3b5a;
+            border-radius: 28px;
+            padding: 1.5rem 1.2rem 1.2rem;
+            text-align: center;
+            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .account-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-6px);
+        }
+
+        .account-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #90d0ff;
+        }
+
+        .account-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .account-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #fbbf24, #ff9f4b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0.2rem 0;
+        }
+
+        .account-note {
+            font-size: 0.75rem;
+            color: #8493b4;
+            margin-bottom: 1rem;
+        }
+
+        /* 数量选择器 */
+        .qty-selector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 0.8rem 0;
+            background: #1e2a47;
+            border-radius: 40px;
+            padding: 0.3rem 0.5rem;
+            border: 1px solid #3b5c9c;
+        }
+
+        .qty-btn {
+            background: #0f1a30;
+            border: none;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.1s;
+            border: 1px solid #3b82f6;
+        }
+
+        .qty-btn:hover {
+            background: #2b3f6e;
+        }
+
+        .qty-num {
+            font-size: 1.2rem;
+            font-weight: 600;
+            min-width: 30px;
+            text-align: center;
+            color: #b3e0ff;
+        }
+
+        .buy-tg-btn {
+            background: linear-gradient(145deg, #1f3a5f, #142b44);
+            border: 1px solid #4f9eff;
+            border-radius: 40px;
+            padding: 0.6rem 0.8rem;
+            color: #d7ecff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.2s;
+            margin-top: auto;
+            text-decoration: none;
+        }
+
+        .buy-tg-btn i {
+            font-size: 1.2rem;
+            color: #26a5e4;
+        }
+
+        .buy-tg-btn:hover {
+            background: #1f4975;
+            border-color: #f0b90b;
+            box-shadow: 0 0 15px #3b82f6;
+        }
+
+        /* 教学网格 (也用于项目/脚本专区) */
+        .teach-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0 3rem;
+        }
+
+        .teach-item {
+            background: rgba(18, 26, 45, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid #2d374b;
+            border-radius: 28px;
+            padding: 1.8rem 1.5rem;
+            transition: 0.2s;
+            position: relative;
+        }
+
+        .teach-item:hover {
+            border-color: #4f8eff;
+            background: rgba(28, 40, 65, 0.8);
+        }
+
+        .teach-icon {
+            font-size: 2.2rem;
+            background: linear-gradient(45deg, #3b82f6, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .teach-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: #d9e9ff;
+        }
+
+        .teach-desc {
+            color: #b0c2df;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .teach-details {
+            list-style: none;
+            margin-top: 0.8rem;
+            border-top: 1px dashed #3f5680;
+            padding-top: 0.8rem;
+            font-size: 0.9rem;
+            color: #b7c7e6;
+        }
+
+        .teach-details li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .teach-details li i {
+            color: #4ade80;
+            font-size: 0.8rem;
+            margin-top: 0.2rem;
+        }
+
+        .tag-kol, .tag-vip {
+            background: #f59e0b;
+            color: #0b0d17;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tag-vip {
+            background: #a855f7;
+            color: white;
+            box-shadow: 0 0 8px #c084fc;
+        }
+
+        .vip-corner {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #a855f7;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            border: 1px solid #d8b4fe;
+            box-shadow: 0 0 12px #a855f7;
+            font-weight: 600;
+        }
+
+        /* 联系栏 */
+        .tg-contact-bar {
+            background: rgba(0, 30, 60, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid #3b82f6;
+            border-radius: 60px;
+            padding: 1rem 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            margin: 3rem 0 2rem;
+            box-shadow: 0 0 30px rgba(0, 162, 255, 0.3);
+        }
+
+        .tg-username {
+            background: #1a2b40;
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            border: 1px solid #4f9eff;
+            color: #b3e4ff;
+            font-family: monospace;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 4rem;
+            color: #62748e;
+            font-size: 0.9rem;
+            border-top: 1px dashed #2d3f5a;
+            padding-top: 2rem;
+        }
+
+        .disclaimer {
+            font-size: 0.8rem;
+            color: #68738b;
+            margin: 1rem 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 1rem; }
+            .tg-contact-bar { flex-direction: column; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- 固定TG联系栏 -->
+        <div class="tg-contact-bar">
+            <span style="display: flex; align-items: center; gap: 10px;"><i class="fab fa-telegram-plane fa-2x" style="color: #2a9ef0;"></i> <span class="neon-text">📨 账号购买咨询</span></span>
+            <span class="tg-username"><i class="fas fa-paper-plane"></i> @lileisya <i class="fas fa-circle-check" style="color: #2eb872;"></i></span>
+            <span style="font-size: 0.9rem; background: #0f1a2b; padding: 0.3rem 1rem; border-radius: 40px;"><i class="fas fa-bolt"></i> 秒回 · 24h</span>
+        </div>
+
+        <!-- 英雄区 -->
+        <div style="text-align: center; margin: 1.5rem 0 0.5rem;">
+            <h1 style="font-size: 3rem; font-weight: 700; background: linear-gradient(to right, #c0e0ff, #a884ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">🧬 WEB3 撸毛集市 · 按需选购</h1>
+        </div>
+
+        <!-- ========= 账号区域 (带数量 & TG跳转) ========= -->
+        <div class="glass-card" style="padding: 2rem 2rem 1.5rem;">
+            <h2 class="section-title"><i class="fas fa-tags" style="margin-right: 10px;"></i> 现货 · 选择数量 联系TG</h2>
+            <div class="price-grid" id="account-grid">
+                <!-- X新号 -->
+                <div class="account-card" data-account="X新号" data-price="0.8">
+                    <div class="account-icon"><i class="fab fa-twitter"></i></div>
+                    <div class="account-name">X 新号</div>
+                    <div class="account-price">0.8 <span style="font-size:1rem;">元</span></div>
+                    <div class="account-note">🟢 真人关注 / 随机头像</div>
+                    <div class="qty-selector">
+                        <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                        <span class="qty-num">1</span>
+                        <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+                    </div>
+                    <a class="buy-tg-btn" onclick="buyViaTG(this)" href="#"><i class="fab fa-telegram"></i> 联系TG购买</a>
+                </div>
+                <!-- TG号 -->
+                <div class="account-card" data-account="Telegram号" data-price="8">
+                    <div class="account-icon"><i class="fab fa-telegram"></i></div>
+                    <div class="account-name">Telegram</div>
+                    <div class="account-price">8 <span style="font-size:1rem;">元</span></div>
+                    <div class="account-note">🇺🇸 原生手机注册 | 2FA</div>
+                    <div class="qty-selector">
+                        <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                        <span class="qty-num">1</span>
+                        <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+                    </div>
+                    <a class="buy-tg-btn" onclick="buyViaTG(this)" href="#"><i class="fab fa-telegram"></i> 联系TG购买</a>
+                </div>
+                <!-- DC -->
+                <div class="account-card" data-account="Discord号" data-price="1.5">
+                    <div class="account-icon"><i class="fab fa-discord"></i></div>
+                    <div class="account-name">Discord</div>
+                    <div class="account-price">1.5 <span style="font-size:1rem;">元</span></div>
+                    <div class="account-note">➕ 已验邮箱 / 可带Nitro</div>
+                    <div class="qty-selector">
+                        <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                        <span class="qty-num">1</span>
+                        <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+                    </div>
+                    <a class="buy-tg-btn" onclick="buyViaTG(this)" href="#"><i class="fab fa-telegram"></i> 联系TG购买</a>
+                </div>
+                <!-- 谷歌邮箱 -->
+                <div class="account-card" data-account="Gmail" data-price="0.8">
+                    <div class="account-icon"><i class="fab fa-google"></i></div>
+                    <div class="account-name">Gmail</div>
+                    <div class="account-price">0.8 <span style="font-size:1rem;">元</span></div>
+                    <div class="account-note">📩 一次性 / 满16岁</div>
+                    <div class="qty-selector">
+                        <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                        <span class="qty-num">1</span>
+                        <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+                    </div>
+                    <a class="buy-tg-btn" onclick="buyViaTG(this)" href="#"><i class="fab fa-telegram"></i> 联系TG购买</a>
+                </div>
+                <!-- 微软邮箱 -->
+                <div class="account-card" data-account="Outlook" data-price="0.4">
+                    <div class="account-icon"><i class="fab fa-microsoft"></i></div>
+                    <div class="account-name">Outlook</div>
+                    <div class="account-price">0.4 <span style="font-size:1rem;">元</span></div>
+                    <div class="account-note">🔁 可换绑 / 长期</div>
+                    <div class="qty-selector">
+                        <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                        <span class="qty-num">1</span>
+                        <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+                    </div>
+                    <a class="buy-tg-btn" onclick="buyViaTG(this)" href="#"><i class="fab fa-telegram"></i> 联系TG购买</a>
+                </div>
+                <!-- 动态IP 10G 150元 -->
+                <div class="account-card" data-account="动态IP 10G流量包" data-price="150">
+                    <div class="account-icon"><i class="fas fa-globe"></i></div>
+                    <div class="account-name">动态IP 10G</div>
+                    <div class="account-price">150 <span style="font-size:1rem;">元</span></div>
+                    <div class="account-note">🌐 住宅/机房混搭 | 月流量包</div>
+                    <div class="qty-selector">
+                        <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                        <span class="qty-num">1</span>
+                        <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+                    </div>
+                    <a class="buy-tg-btn" onclick="buyViaTG(this)" href="#"><i class="fab fa-telegram"></i> 联系TG购买</a>
+                </div>
+            </div>
+            <div class="disclaimer"><i class="fas fa-shield-alt" style="color:#4ade80;"></i> 点击购买自动跳转TG，数量自动附加。动态IP新上线，咨询有优惠。</div>
+        </div>
+
+        <!-- ========= 脚本自动化专区 · VIP专属 ========= -->
+        <div style="margin-top: 4rem;">
+            <h2 class="section-title"><i class="fas fa-robot" style="margin-right: 10px;"></i> 脚本自动化专区 · <span class="tag-vip">VIP专属</span></h2>
+            <div class="teach-grid">
+                <!-- Myriad 脚本 -->
+                <div class="teach-item">
+                    <div class="vip-corner"><i class="fas fa-crown"></i> VIP</div>
+                    <div class="teach-icon"><i class="fas fa-code-branch"></i></div>
+                    <div class="teach-title">Myriad 自动化脚本</div>
+                    <div class="teach-desc">社交任务自动交互、节点验证、代币领取。全自动运行，支持多账号。</div>
+                    <div class="teach-details">
+                        <li><i class="fas fa-check"></i> 每日自动签到/发帖</li>
+                        <li><i class="fas fa-check"></i> 反检测指纹模拟</li>
+                    </div>
+                </div>
+                <!-- Pol预测市场脚本 -->
+                <div class="teach-item">
+                    <div class="vip-corner"><i class="fas fa-crown"></i> VIP</div>
+                    <div class="teach-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="teach-title">Pol 预测市场脚本</div>
+                    <div class="teach-desc">自动投注、流动性挖矿、收益计算。策略可配置，实时监控。</div>
+                    <div class="teach-details">
+                        <li><i class="fas fa-check"></i> 多市场批量投注</li>
+                        <li><i class="fas fa-check"></i> 胜率分析 & 自动复投</li>
+                    </div>
+                </div>
+                <!-- 零撸脚本1 -->
+                <div class="teach-item">
+                    <div class="vip-corner"><i class="fas fa-crown"></i> VIP</div>
+                    <div class="teach-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                    <div class="teach-title">零撸 · 领水/签到脚本</div>
+                    <div class="teach-desc">支持多个测试网/主网领水，每日自动签到，零成本撸空投。</div>
+                    <div class="teach-details">
+                        <li><i class="fas fa-check"></i> 20+ 水龙头自动领取</li>
+                        <li><i class="fas fa-check"></i> 验证码打码接入</li>
+                    </div>
+                </div>
+                <!-- 零撸脚本2 -->
+                <div class="teach-item">
+                    <div class="vip-corner"><i class="fas fa-crown"></i> VIP</div>
+                    <div class="teach-icon"><i class="fas fa-cubes"></i></div>
+                    <div class="teach-title">零撸 · NFT铸造/跨链</div>
+                    <div class="teach-desc">批量铸造NFT、跨链交互、奥德赛任务自动化。</div>
+                    <div class="teach-details">
+                        <li><i class="fas fa-check"></i> 多链批量铸造</li>
+                        <li><i class="fas fa-check"></i> 跨链桥自动交易</li>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: right; margin-top: -1.5rem; margin-bottom: 1rem;">
+                <span style="background: #2d3b5a; padding: 0.3rem 1.2rem; border-radius: 30px; font-size: 0.9rem;"><i class="fas fa-lock"></i> 联系TG解锁VIP脚本库及更新</span>
+            </div>
+        </div>
+
+        <!-- ========= 项目专区 · 教程/调研 ========= -->
+        <div style="margin-top: 3rem;">
+            <h2 class="section-title"><i class="fas fa-folder-open" style="margin-right: 10px;"></i> 项目专区 · 教程/调研</h2>
+            <div class="teach-grid">
+                <!-- 项目1 -->
+                <div class="teach-item">
+                    <div class="teach-icon"><i class="fas fa-layer-group"></i></div>
+                    <div class="teach-title">LayerZero 交互教程</div>
+                    <div class="teach-desc">深度调研 + 手把手交互步骤，跨链消息传递、测试网实操。</div>
+                    <div class="teach-details">
+                        <li><i class="fas fa-file-alt"></i> 项目调研：融资/背景/空投预期</li>
+                        <li><i class="fas fa-terminal"></i> 脚本化交互示例</li>
+                    </div>
+                </div>
+                <!-- 项目2 -->
+                <div class="teach-item">
+                    <div class="teach-icon"><i class="fab fa-ethereum"></i></div>
+                    <div class="teach-title">StarkNet 撸毛指南</div>
+                    <div class="teach-desc">生态项目梳理、跨链桥、NFT铸造、主流DEX交互策略。</div>
+                    <div class="teach-details">
+                        <li><i class="fas fa-file-alt"></i> 11个必做项目清单</li>
+                        <li><i class="fas fa-chart-simple"></i> 资金交互路径规划</li>
+                    </div>
+                </div>
+                <!-- 项目3 -->
+                <div class="teach-item">
+                    <div class="teach-icon"><i class="fas fa-rocket"></i></div>
+                    <div class="teach-title">zkSync 2.0 精品调研</div>
+                    <div class="teach-desc">生态数据分析、空投预期、交互脚本及批量操作方案。</div>
+                    <div class="teach-details">
+                        <li><i class="fas fa-file-alt"></i> 官方跨链桥 vs 第三方</li>
+                        <li><i class="fas fa-arrow-trend-up"></i> 潜在女巫检测规避</li>
+                    </div>
+                </div>
+                <!-- 项目4 -->
+                <div class="teach-item">
+                    <div class="teach-icon"><i class="fas fa-medal"></i></div>
+                    <div class="teach-title">Linea 奥德赛任务详解</div>
+                    <div class="teach-desc">逐任务解析、Gas估算、多账号并行完成策略。</div>
+                    <div class="teach-details">
+                        <li><i class="fas fa-list-check"></i> 20+任务全流程</li>
+                        <li><i class="fas fa-clock"></i> 时间规划与IP隔离</li>
+                    </div>
+                </div>
+                <!-- 项目5 -->
+                <div class="teach-item">
+                    <div class="teach-icon"><i class="fas fa-dice-d6"></i></div>
+                    <div class="teach-title">Arbitrum Nova 生态调研</div>
+                    <div class="teach-desc">游戏/社交赛道分析，早期交互机会与空投埋伏。</div>
+                    <div class="teach-details">
+                        <li><i class="fas fa-file-alt"></i> 潜力项目筛选</li>
+                        <li><i class="fas fa-dice"></i> 批量交互工具</li>
+                    </div>
+                </div>
+                <!-- 项目6 -->
+                <div class="teach-item">
+                    <div class="teach-icon"><i class="fas fa-eye"></i></div>
+                    <div class="teach-title">Scroll 早期交互教程</div>
+                    <div class="teach-desc">测试网跨链、生态项目部署、合约交互全记录。</div>
+                    <div class="teach-details">
+                        <li><i class="fas fa-flask"></i> 测试币领取大全</li>
+                        <li><i class="fas fa-code"></i> 智能合约手动交互</li>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin: 1rem 0 2rem;">
+                <span style="background: #1f3a5f; padding: 0.4rem 2rem; border-radius: 40px; border: 1px solid #4f9eff;">
+                    <i class="fab fa-telegram"></i> 联系 @lileisya 获取完整项目包 · 每周更新
+                </span>
+            </div>
+        </div>
+
+        <!-- ========= 近期热门零撸项目专区 ========= -->
+        <div style="margin-top: 4rem;">
+            <h2 class="section-title"><i class="fas fa-fire" style="color: #f97316;"></i> 近期热门零撸项目 · 预测市场/DEX</h2>
+            <div class="teach-grid">
+                <!-- 项目1：Polymarket 预测市场 -->
+                <div class="teach-item">
+                    <div class="teach-icon"><i class="fas fa-chart-pie"></i></div>
+                    <div class="teach-title">Polymarket 预测市场</div>
+                    <div class="teach-desc">去中心化预测市场平台，允许用户对现实世界事件进行投注。近期热度高，存在潜在空投预期。</div>
+                    <div class="teach-details">
+                        <li><i class="fas fa-file-alt"></i> 融资背景：2021年获得1600万美元融资，Placeholder等领投</li>
+                        <li><i class="fas fa-dove"></i> 交互策略：进行小额预测交易，参与流动性提供</li>
+                        <li><i class="fas fa-calendar"></i> 空投预期：尚未发币，早期用户有望获得空投</li>
+                    </div>
+                </div>
+                <!-- 项目2：Azuro 预测市场协议 -->
+                <div class="teach-item">
+                    <div class="teach-icon"><i class="fas fa-dice"></i></div>
+                    <div class="teach-title">Azuro 预测市场</div>
+                    <div class="teach-desc">模块化预测市场协议，已部署在Polygon、Gnosis等链。零撸交互可通过测试网或主网小额参与。</div>
+                    <div class="teach-details">
+                        <li><i class="fas fa-file-alt"></i> 融资：2023年完成400万美元融资</li>
+                        <li><i class="fas fa-flask"></i> 测试网：参与测试网交互，领取测试币进行预测</li>
+                        <li><i class="fas fa-chart-line"></i> 潜在空投：协议治理代币尚未发行，早期用户受激励</li>
+                    </div>
+                </div>
+                <!-- 项目3：Uniswap v4 生态交互 -->
+                <div class="teach-item">
+                    <div class="teach-icon"><i class="fas fa-arrow-right-arrow-left"></i></div>
+                    <div class="teach-title">Uniswap v4 生态</div>
+                    <div class="teach-desc">Uniswap v4即将上线，钩子机制带来新交互机会。可关注早期部署在v4上的新项目。</div>
+                    <div class="teach-details">
+                        <li><i class="fas fa-file-alt"></i> 调研：v4引入hooks，允许自定义流动性池行为</li>
+                        <li><i class="fas fa-dragon"></i> 交互：尝试部署在v4上的新DEX项目，提供流动性</li>
+                        <li><i class="fas fa-gift"></i> 零撸机会：参与测试网或主网早期流动性挖矿</li>
+                    </div>
+                </div>
+                <!-- 项目4：PancakeSwap 新链部署 -->
+                <div class="teach-item">
+                    <div class="teach-icon"><i class="fas fa-cake-candles"></i></div>
+                    <div class="teach-title">PancakeSwap 新链部署</div>
+                    <div class="teach-desc">PancakeSwap已扩展至多个新兴链（如opBNB、zkSync Era），早期交互可能有空投加成。</div>
+                    <div class="teach-details">
+                        <li><i class="fas fa-file-alt"></i> 调研：CAKE代币已在多链存在，但新链部署可能激励早期用户</li>
+                        <li><i class="fas fa-cubes"></i> 交互：在新链上进行代币交换、添加流动性</li>
+                        <li><i class="fas fa-chart-bar"></i> 零撸成本低，跨链费用较低</li>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin: 1rem 0 2rem;">
+                <span style="background: #1f3a5f; padding: 0.4rem 2rem; border-radius: 40px; border: 1px solid #4f9eff;">
+                    <i class="fab fa-telegram"></i> 联系 @lileisya 获取完整零撸项目列表 · 持续更新
+                </span>
+            </div>
+        </div>
+
+        <!-- ========= VIP交流群 · 月费会员 ========= -->
+        <div style="margin-top: 4rem;">
+            <h2 class="section-title"><i class="fas fa-crown" style="color: #fbbf24;"></i> VIP交流群 · 月费会员</h2>
+            <div class="glass-card" style="padding: 2rem;">
+                <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: center;">
+                    <!-- 左侧：价格和权益列表 -->
+                    <div style="flex: 1; min-width: 240px;">
+                        <div style="font-size: 2.2rem; font-weight: 700; background: linear-gradient(to right, #fbbf24, #ff9f4b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.2;">
+                            100 USDT<span style="font-size: 1rem; color: #aaa;">/月</span>
+                        </div>
+                        <div style="margin: 1.5rem 0;">
+                            <p style="margin-bottom: 0.6rem;"><i class="fas fa-check-circle" style="color: #4ade80; width: 1.5rem;"></i> VIP专属辅助</p>
+                            <p style="margin-bottom: 0.6rem;"><i class="fas fa-check-circle" style="color: #4ade80; width: 1.5rem;"></i> 隔离浏览器配置</p>
+                            <p style="margin-bottom: 0.6rem;"><i class="fas fa-check-circle" style="color: #4ade80; width: 1.5rem;"></i> 梯子搭建教学</p>
+                            <p style="margin-bottom: 0.6rem;"><i class="fas fa-check-circle" style="color: #4ade80; width: 1.5rem;"></i> 撸毛项目分享</p>
+                            <p style="margin-bottom: 0.6rem;"><i class="fas fa-check-circle" style="color: #4ade80; width: 1.5rem;"></i> VPS优选推荐</p>
+                        </div>
+                    </div>
+                    <!-- 右侧：返佣+入群按钮 -->
+                    <div style="flex: 1; min-width: 240px;">
+                        <div style="background: #1f3a5f; border-radius: 28px; padding: 1.8rem 1.5rem; border: 1px solid #4f9eff; text-align: center;">
+                            <p style="font-size: 1.4rem; font-weight: 600; color: #fbbf24;"><i class="fas fa-gem" style="margin-right: 8px;"></i>邀请返佣 30%</p>
+                            <p style="margin: 0.8rem 0;">多邀多得 · 长期有效</p>
+                            <p style="margin-bottom: 1.2rem;">每邀请一位朋友加入，返还30%月费</p>
+                            <a href="https://t.me/lileisya" target="_blank" class="buy-tg-btn" style="display: inline-flex; padding: 0.8rem 2.2rem; font-size: 1.2rem; background: #142b44;"><i class="fab fa-telegram"></i> 联系TG入群</a>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 1.5rem; color: #ffd966; font-size: 1rem; text-align: center; border-top: 1px dashed #3f5680; padding-top: 1rem;">
+                    <i class="fas fa-star"></i> 每月仅100 USDT，解锁全部VIP权益+脚本专区+项目调研 <i class="fas fa-star"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 二次强调TG跳转 -->
+        <div style="margin: 3rem 0 2rem; text-align: center;">
+            <a href="https://t.me/lileisya" target="_blank" style="background: linear-gradient(145deg, #1f3a5f, #142b44); border: 1px solid #4f9eff; border-radius: 60px; padding: 0.9rem 2.5rem; display: inline-flex; align-items: center; gap: 15px; font-size: 1.4rem; font-weight: 600; color: #d7ecff; box-shadow: 0 0 25px #3b82f6;">
+                <i class="fab fa-telegram fa-2x"></i> 立即联系 @lileisya 购买/入群 <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <!-- 底部 -->
+        <div class="footer-note">
+            <p><i class="fab fa-telegram"></i> 唯一联系方式: <strong>@lileisya</strong> (账号购买 · 教学资料 · VIP脚本 · 项目调研 · 零撸项目 · 交流群)</p>
+            <p style="margin-top: 1rem;">© 2025 撸毛学院 | 所有教学仅限技术交流</p>
+        </div>
+    </div>
+
+    <!-- JavaScript 处理数量和TG跳转 -->
+    <script>
+        // 修改数量
+        function changeQty(btn, delta) {
+            const selector = btn.closest('.qty-selector');
+            if (!selector) return;
+            const numSpan = selector.querySelector('.qty-num');
+            let val = parseInt(numSpan.innerText, 10);
+            val = isNaN(val) ? 1 : val;
+            val += delta;
+            if (val < 1) val = 1;
+            if (val > 999) val = 999;
+            numSpan.innerText = val;
+        }
+
+        // 购买跳转TG，附带账号信息和数量
+        function buyViaTG(btn) {
+            const card = btn.closest('.account-card');
+            if (!card) return;
+            const accountName = card.dataset.account || card.querySelector('.account-name')?.innerText || '账号';
+            const qtySpan = card.querySelector('.qty-num');
+            const qty = qtySpan ? parseInt(qtySpan.innerText, 10) : 1;
+            const price = card.dataset.price || '?';
+            
+            const message = `您好，我想购买 ${accountName} x${qty}，单价 ${price} 元。`;
+            const tgUrl = `https://t.me/lileisya?text=${encodeURIComponent(message)}`;
+            window.open(tgUrl, '_blank');
+        }
+
+        document.querySelectorAll('.buy-tg-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+            });
+        });
+    </script>
+    <!-- 背景网格装饰 -->
+    <div style="position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1; opacity:0.1; background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 width=%2210%22 height=%2210%22><rect width=%22100%22 height=%22100%22 fill=%22none%22 stroke=%22%233b82f6%22 stroke-width=%220.3%22/></svg>');"></div>
+</body>
+</html>
